@@ -1,4 +1,4 @@
-package maraphon.obstacles;
+package lesson1.maraphon.obstacles;
 
 import lesson1.maraphon.competitors.Competitor;
 

@@ -9,7 +9,7 @@ import lesson1.maraphon.obstacles.Obstacle;
 import lesson1.maraphon.obstacles.Wall;
 import lesson1.maraphon.obstacles.Water;
 import maraphon.competitors.Team;
-import maraphon.obstacles.Course;
+import lesson1.maraphon.obstacles.Course;
 
 public class Main {
     public static void main(String[] args) {
