@@ -1,6 +1,6 @@
 package lesson2;
 
-public class MyArrayDataException extends Exception {
+public class MyArrayDataException extends NumberFormatException {
 
     int row;
     int column;
