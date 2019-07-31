@@ -8,14 +8,26 @@ import lesson1.maraphon.obstacles.Cross;
 import lesson1.maraphon.obstacles.Obstacle;
 import lesson1.maraphon.obstacles.Wall;
 import lesson1.maraphon.obstacles.Water;
+import maraphon.competitors.Team;
+import lesson1.maraphon.obstacles.Course;
 
 public class Main {
     public static void main(String[] args) {
+
+        Team team = new Team("GEEKS",   new Competitor[] {
+                        new Human("Petya"),
+                        new Cat("Vasiliy"),
+                        new Cat("Murka"),
+                        new Dog("Barbos")
+        });
+
         Competitor[] competitors ={
                 new Human("Bob"),
                 new Cat("Barsik"),
                 new Dog("Jack"),
-                new Dog("Тузик") };
+                new Dog("Тузик"),
+                team
+        };
         Obstacle[] obstacles = {
                 new Cross(80),
                 new Wall(2),
@@ -32,5 +44,19 @@ public class Main {
         for (Competitor c:competitors ) {
             c.info();
         }
+
+        team.infoWhoDone();
+
+
+        System.out.println();
+
+        Course course = new Course( new Obstacle[] {
+                new Water(20),
+                new Wall(2),
+                new Cross(30),
+        });
+
+        course.doIt(team);
+
     }
 }
