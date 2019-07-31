@@ -2,8 +2,7 @@ package lesson2;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -79,8 +78,9 @@ public class Main {
 
         String[][] words ={
                 {"234","654","3","34"},
-                {"444","4","5645"},
-                {"3","3","22","789"},
+                {"444","4","5645", "3"},
+                {"3","3","22z","789"},
+                {"113","223","3322","478"},
         };
 
         int i = Integer.parseInt(words[0][1]);
@@ -88,7 +88,14 @@ public class Main {
         System.out.println(words.length);
         System.out.println(words[2].length);
 
-
+        try {
+            System.out.println("Сумма массива = " + sumArray(words));
+        } catch (MyArraySizeException e) {
+            e.printStackTrace();
+        } catch (MyArrayDataException e) {
+            e.printStackTrace();
+            System.out.println(e.getError());
+        }
     }
 
     public static int fact(int n) throws FactorialException {
@@ -131,5 +138,34 @@ public class Main {
         int a = 0;
         int b = 5;
         System.out.println(b / a);
+    }
+
+    public static int sumArray(String[][] words) throws MyArraySizeException, MyArrayDataException
+    {
+        if(words.length != 4)
+            throw new MyArraySizeException();
+
+        int sum = 0;
+        int row = 1;
+        int column = 1;
+        for(String w[]: words)
+        {
+            if(w.length != 4)
+                throw new MyArraySizeException();
+
+            for(String cell: w) {
+                try {
+                    sum += Integer.parseInt(cell);
+                }
+                catch(Exception e)
+                {
+                    throw new MyArrayDataException(row, column, cell);
+                }
+                column++;
+            }
+            column = 1;
+            row++;
+        }
+        return sum;
     }
 }
