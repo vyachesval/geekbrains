@@ -1,7 +1,5 @@
 package lesson3.practic3;
 
-import lesson3.Phonebook;
-
 import java.util.*;
 
 public class Main {

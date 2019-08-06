@@ -1,4 +1,4 @@
-package lesson3;
+package lesson3.practic3;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -10,7 +10,7 @@ public class Phonebook {
     public void add(String name, Integer number){
         ArrayList<Integer> numbers = phonebook.get(name);
         if(numbers == null)
-            phonebook.put(name, new ArrayList<Integer>(List.of(number)));
+            phonebook.put(name, new ArrayList<Integer>(Arrays.asList(number)));
         else
             numbers.add(number);
     }
