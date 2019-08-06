@@ -1,0 +1,11 @@
+.button{
+    -fx-background-color: green;
+    -fx-font-size: 20;
+}
+.button:hover{
+    -fx-background-color: yellow;
+}
+
+.text-field{
+    -fx-font-size: 20;
+}

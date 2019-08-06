@@ -13,7 +13,8 @@ public class Main {
 //        al.add(2,90);
 //        System.out.println(al);
 //        System.out.println(al.get(3));
-//        ((ArrayList<Integer>) al).ensureCapacity(300);
+//        ((ArrayList<Integer>) al).ensureCapacit
+//        y(300);
 //        ((ArrayList<Integer>) al).trimToSize();
 //        System.out.println(al.isEmpty());
 ////        al.clear();

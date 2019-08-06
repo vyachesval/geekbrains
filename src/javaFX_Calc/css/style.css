@@ -1,0 +1,13 @@
+.button{
+    -fx-font-size: 20;
+}
+.button:hover{
+    -fx-background-color: yellow;
+}
+
+#clearBTN{
+    -fx-background-color: red;
+}
+#clearBTN:hover{
+    -fx-background-color: #ff1bbb;
+}
