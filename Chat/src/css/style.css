@@ -1,0 +1,21 @@
+#btnSend {
+    -fx-pref-width: 30px;
+    -fx-pref-height: 26px;
+    -fx-background-color: cornflowerblue;
+    -fx-background-image: url("/img/sent.png");
+    -fx-background-size: 25px 25px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#btnSend:hover {
+    -fx-background-color:coral;
+}
+
+.text-area .content {
+    -fx-background-color:azure;
+}
+
+.vbox {
+    -fx-background-color:darkseagreen;
+}
