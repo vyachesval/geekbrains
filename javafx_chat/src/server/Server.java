@@ -45,6 +45,15 @@ public class Server {
         }
     }
 
+    public void privateMsg(String nick, String msg){
+        for (ClientHandler c:clients ) {
+            if(nick.equals(c.getNick())) {
+                c.sendMSG(msg);
+                break;
+            }
+        }
+    }
+
     public void subscribe(ClientHandler clientHandler){
         clients.add(clientHandler);
     }
