@@ -10,6 +10,11 @@ public class ClientHandler {
     private Socket socket;
     DataInputStream in;
     DataOutputStream out;
+
+    public String getNick() {
+        return nick;
+    }
+
     String nick;
 
     public ClientHandler(Server server, Socket socket) {
@@ -53,8 +58,14 @@ public class ClientHandler {
                         if (str.equals("/end")) {
                             break;
                         }
-
-                        server.broadcastMsg(nick + " : " + str);
+                        if(str.startsWith("/w "))
+                        {
+                            String[] privateMess = str.split(" ",3);
+                            if(privateMess.length == 3)
+                                server.privateMsg(privateMess[1], nick + " : " + privateMess[2]);
+                        }
+                        else
+                            server.broadcastMsg(nick + " : " + str);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
