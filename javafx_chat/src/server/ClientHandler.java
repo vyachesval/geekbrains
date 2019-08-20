@@ -4,18 +4,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientHandler {
     private Server server;
     private Socket socket;
     DataInputStream in;
     DataOutputStream out;
-
-    public String getNick() {
-        return nick;
-    }
-
-    String nick;
+    private String nick;
+    private String login;
 
     public ClientHandler(Server server, Socket socket) {
         try {
@@ -42,11 +39,16 @@ public class ClientHandler {
 //                            String[] token = str.split(" +",3);
                             String newNick = AuthService.getNickByLoginAndPass(token[1], token[2]);
                             if (newNick != null) {
-                                sendMSG("/authok");
-                                nick = newNick;
-                                server.subscribe(this);
-                                System.out.println("Клиент " + nick + " авторизовался");
-                                break;
+                                if(!server.isLoginAuthorised(token[1])){
+                                    sendMSG("/authok "+newNick);
+                                    nick = newNick;
+                                    login = token[1];
+                                    server.subscribe(this);
+                                    System.out.println("Клиент " + nick + " авторизовался");
+                                    break;
+                                }else{
+                                    sendMSG("Учетная запись уже используется");
+                                }
                             } else {
                                 sendMSG("Неверный логин / пароль");
                             }
@@ -56,17 +58,18 @@ public class ClientHandler {
                     while (true) {
                         String str = in.readUTF();
                         if (str.equals("/end")) {
+                            sendMSG("/end");
                             break;
                         }
-                        if(str.startsWith("/w "))
-                        {
-                            String[] privateMess = str.split(" ",3);
-                            if(privateMess.length == 3)
-                                server.privateMsg(privateMess[1], nick + " : " + privateMess[2]);
+
+                        if (str.startsWith("/w")) {
+                            String[] token = str.split(" +", 3);
+                            server.broadcastMsg(token[2], nick, token[1]);
+                        }else {
+                            server.broadcastMsg(str, nick);
                         }
-                        else
-                            server.broadcastMsg(nick + " : " + str);
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -93,4 +96,11 @@ public class ClientHandler {
         }
     }
 
+    public String getNick() {
+        return nick;
+    }
+
+    public String getLogin() {
+        return login;
+    }
 }
