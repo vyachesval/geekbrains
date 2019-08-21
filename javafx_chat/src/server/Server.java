@@ -15,7 +15,7 @@ public class Server {
 
     public Server() throws SQLException {
         AuthService.connect();
-        AuthService.addMessageToDB("nick1",null,"qwerty123","11.11");
+        AuthService.addMessageToDB("nick1", null, "qwerty123", "11.11");
 //        System.out.println(AuthService.getNickByLoginAndPass("log2in1","pass1"));
 
         clients = new Vector<>();

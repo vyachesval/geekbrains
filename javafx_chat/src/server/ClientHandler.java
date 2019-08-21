@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ClientHandler {
     private Server server;
@@ -31,6 +32,7 @@ public class ClientHandler {
 
             new Thread(() -> {
                 try {
+                    socket.setSoTimeout(120000);
                     // цикл авторизации
                     while (true) {
                         String str = in.readUTF();
@@ -39,14 +41,15 @@ public class ClientHandler {
 //                            String[] token = str.split(" +",3);
                             String newNick = AuthService.getNickByLoginAndPass(token[1], token[2]);
                             if (newNick != null) {
-                                if(!server.isLoginAuthorised(token[1])){
-                                    sendMSG("/authok "+newNick);
+                                if (!server.isLoginAuthorised(token[1])) {
+                                    sendMSG("/authok " + newNick);
                                     nick = newNick;
                                     login = token[1];
                                     server.subscribe(this);
+                                    socket.setSoTimeout(0);
                                     System.out.println("Клиент " + nick + " авторизовался");
                                     break;
-                                }else{
+                                } else {
                                     sendMSG("Учетная запись уже используется");
                                 }
                             } else {
@@ -65,11 +68,13 @@ public class ClientHandler {
                         if (str.startsWith("/w")) {
                             String[] token = str.split(" +", 3);
                             server.broadcastMsg(token[2], nick, token[1]);
-                        }else {
+                        } else {
                             server.broadcastMsg(str, nick);
                         }
                     }
-
+                } catch(SocketTimeoutException e) {
+                    System.out.println("Connection timed out");
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
